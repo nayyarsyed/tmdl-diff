@@ -43,5 +43,9 @@ tmdl-diff list
 tmdl-diff compare
 ```
 
+## 🖼️ Visual Preview
+
+![TMDL-DIFF Screenshot](Asset/Screenshots/Presentation1.png)
+
 ## 📄 License
 MIT
