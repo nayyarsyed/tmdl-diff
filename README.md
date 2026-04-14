@@ -1,10 +1,42 @@
+<div align="center">
+  <svg width="650" height="200" viewBox="0 0 650 200" xmlns="http://www.w3.org/2000/svg">
+    <!-- Terminal Background -->
+    <rect width="650" height="200" fill="#000000" rx="8"/>
+    
+    <!-- Gradient Definition -->
+    <defs>
+      <linearGradient id="retroGold" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+        <stop offset="50%" style="stop-color:#B8860B;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#8B6508;stop-opacity:1" />
+      </linearGradient>
+    </defs>
+
+    <!-- Retro ASCII Art Text -->
+    <text x="50%" y="40" font-family="monospace" font-size="12" fill="url(#retroGold)" text-anchor="middle" xml:space="preserve">
+ ████████╗███╗   ███╗██████╗ ██╗         ██████╗ ██╗███████╗███████╗
+ ╚══██╔══╝████╗ ████║██╔══██╗██║         ██╔══██╗██║██╔════╝██╔════╝
+    ██║   ██╔████╔██║██║  ██║██║         ██║  ██║██║█████╗  █████╗  
+    ██║   ██║╚██╔╝██║██║  ██║██║         ██║  ██║██║██╔══╝  ██╔══╝  
+    ██║   ██║ ╚═╝ ██║██████╔╝███████╗    ██████╔╝██║██║     ██║     
+    ╚═╝   ╚═╝     ╚═╝╚═════╝ ╚══════╝    ╚═════╝ ╚═╝╚═╝     ╚═╝     
+    </text>
+
+    <!-- Gradient Divider Band -->
+    <rect x="25" y="145" width="600" height="4" fill="url(#retroGold)" rx="2"/>
+    
+    <!-- Subtitle -->
+    <text x="50%" y="175" font-family="Courier New, monospace" font-size="16" font-weight="bold" fill="#B8860B" text-anchor="middle" letter-spacing="3">
+      [ SEMANTIC POWER BI DIFF TOOL ]
+    </text>
+  </svg>
+</div>
+
 # 🚀 TMDL Diff CLI
 
 **Stop hunting for broken visuals. Start comparing.**
 
 `tmdl-diff` is a high-level semantic comparison tool for Power BI developers. It compares TMDL (Tabular Model Definition Language) and PBIP (Power BI Project) files to instantly identify structural changes that break reports.
-
-Whether you renamed a measure, changed a table structure, or modified a calculation, this tool saves hours of manual checking by showing you exactly what changed at the CLI level.
 
 ## ✨ Key Value
 - **Visual Integrity**: Quickly see if a structural change (like a rename) will impact your report visuals.
@@ -14,48 +46,26 @@ Whether you renamed a measure, changed a table structure, or modified a calculat
 
 ## 📦 Installation
 
-Install directly from PyPI (once published):
 ```bash
 pip install tmdl-diff
-```
-
-Or install locally for development:
-```bash
-git clone https://github.com/your-username/tmdl-diff.git
-cd tmdl-diff
-pip install -e .
 ```
 
 ## 🚀 Quick Usage
 
 ### 1. Compare two Project Files (.pbip)
-The most common way to compare two versions of a model:
 ```bash
 tmdl-diff diff version1.pbip version2.pbip
 ```
 
 ### 2. List Open Instances & Files
-See what Power BI models are currently running or available in your folder:
 ```bash
 tmdl-diff list
 ```
 
 ### 3. Interactive Comparison
-Don't remember the filenames? Use the interactive picker:
 ```bash
 tmdl-diff compare
 ```
-
-### 4. Direct TMDL Comparison
-Compare raw `.tmdl` files exported from Tabular Editor or Power BI:
-```bash
-tmdl-diff diff table1.tmdl table2.tmdl
-```
-
-## 🛠️ How it works
-1. **PBIP Parsing**: Recursively scans `.SemanticModel` folders for TMDL definitions.
-2. **Semantic Analysis**: Groups changes by Table, Measure, and Relationship.
-3. **Smart Formatting**: Provides a color-coded, high-level summary of additions, deletions, and modifications.
 
 ## 📄 License
 MIT
