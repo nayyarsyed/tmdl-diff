@@ -37,6 +37,8 @@ tmdl-diff list
 tmdl-diff compare
 ```
 
+> **Note**: For the best experience, run `tmdl-diff` from the directory where your `.tmdl` or `.pbip` files are located. While the tool supports absolute paths (even across different drives), placing your snapshots in the current working directory allows for faster selection and automatic folder detection.
+
 ## 🖼️ Visual Preview
 
 ![TMDL-DIFF Screenshot](Asset/Screenshots/Presentation1.png)
