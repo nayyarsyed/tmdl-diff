@@ -1,5 +1,5 @@
 # TMDL-DIFF 
-A Tool you can run on CLI
+A simple CLI based tool
 
 <p align="center">
   <img src="Asset/logo.svg" alt="TMDL-DIFF Logo" width="800">
