@@ -1,6 +1,9 @@
 import difflib
+import json
+import subprocess
 from pathlib import Path
 from typing import Dict, List, Optional, Any
+from packaging import version
 
 import questionary
 import typer
@@ -15,11 +18,76 @@ from pbi_detector import get_open_pbi_models
 from pbip_parser import compare_models
 from semantic_formatter import render_semantic_diff
 
+__version__ = "1.1.0"
+
 app = typer.Typer(
     help="TMDL Diff CLI - compare Power BI TMDL export files and open Power BI instances",
     no_args_is_help=True,
 )
 console = Console()
+
+
+def check_for_updates() -> None:
+    """Check PyPI for a newer version and notify user if available."""
+    try:
+        result = subprocess.run(
+            ["pip", "index", "versions", "tmdl-diff-cli"],
+            capture_output=True,
+            text=True,
+            timeout=3
+        )
+        
+        if result.returncode == 0:
+            # Parse pip output to find available version
+            output = result.stdout
+            if "Available versions:" in output:
+                lines = output.split("\n")
+                for line in lines:
+                    if "Available versions:" in line:
+                        versions_str = line.split("Available versions:")[1].strip()
+                        latest = versions_str.split(",")[0].strip()
+                        if version.parse(latest) > version.parse(__version__):
+                            console.print(
+                                Panel(
+                                    f"[bold yellow]🎉 New version available: {latest}[/bold yellow]\n\n"
+                                    f"Current version: {__version__}\n"
+                                    f"Latest version: {latest}\n\n"
+                                    f"[cyan]To update, run:[/cyan]\n"
+                                    f"[bold green]pip install --upgrade tmdl-diff-cli[/bold green]",
+                                    title="⬆️ Update Available",
+                                    border_style="yellow"
+                                )
+                            )
+                        break
+    except (subprocess.TimeoutExpired, FileNotFoundError, Exception):
+        # Silently fail if pip is not available or times out
+        pass
+
+
+def version_callback(ctx: typer.Context, param: typer.CallbackParam, value: bool) -> None:
+    """Show version and check for updates."""
+    if value:
+        console.print(f"[bold cyan]tmdl-diff-cli[/bold cyan] version [bold green]{__version__}[/bold green]")
+        check_for_updates()
+        raise typer.Exit()
+
+
+@app.callback(invoke_without_command=True)
+def main_callback(
+    ctx: typer.Context,
+    version: Optional[bool] = typer.Option(
+        None,
+        "--version",
+        "-v",
+        help="Show version and check for updates",
+        callback=version_callback,
+        is_eager=True,
+    ),
+) -> None:
+    """Main app callback - check for updates on startup."""
+    if ctx.invoked_subcommand is None:
+        # If no subcommand, just check for updates silently
+        check_for_updates()
 
 
 def load_tmdl_lines(file_path: Path) -> List[str]:

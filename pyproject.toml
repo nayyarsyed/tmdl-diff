@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tmdl-diff-cli"
-version = "1.0.1"
+version = "1.1.0"
 description = "Professional CLI tool for comparing Power BI TMDL and PBIP project files with semantic diff."
 authors = [
     { name = "nyy", email = "your-email@example.com" }
@@ -33,7 +33,8 @@ classifiers = [
 dependencies = [
     "typer>=0.9.0",
     "rich>=13.0.0",
-    "questionary>=2.0.0"
+    "questionary>=2.0.0",
+    "packaging>=20.0"
 ]
 
 [project.urls]
