@@ -168,12 +168,12 @@ def render_model_info(metadata: Dict[str, object]) -> None:
             table_node = tables_node.add(f"📊 [bold cyan]{t_name}[/bold cyan]")
             
             if t.get("columns"):
-                cols_node = table_node.add("🔹 [bold]Columns[/bold]")
+                cols_node = table_node.add("🔹 [bold yellow]Columns[/bold]")
                 for col in t["columns"]:
                     cols_node.add(f"[dim]{col}[/dim]")
             
             if t.get("measures"):
-                meas_node = table_node.add("🧪 [bold green]Measures[/bold green]")
+                meas_node = table_node.add("🧪 [bold yellow]Measures[/bold green]")
                 for meas in t["measures"]:
                     meas_node.add(f"[green]{meas}[/green]")
             
@@ -234,8 +234,8 @@ def render_hierarchical_comparison(diff: Dict[str, Any]) -> None:
             # Columns Comparison
             all_cols = sorted(list(set(t_diff["data_a"]["columns"]) | set(t_diff["data_b"]["columns"])))
             if all_cols:
-                cl = node_l.add("🔹 [bold]Columns[/bold]")
-                cr = node_r.add("🔹 [bold]Columns[/bold]")
+                cl = node_l.add("🔹 [bold blue]Columns[bold blue]")
+                cr = node_r.add("🔹 [bold blue]Columns[bold blue]")
                 for c in all_cols:
                     if c in t_diff["columns"]["removed"]:
                         cl.add(f"[bold bright_red][-] {c}[/bold bright_red]")
@@ -250,8 +250,8 @@ def render_hierarchical_comparison(diff: Dict[str, Any]) -> None:
             # Measures Comparison
             all_meas = sorted(list(set(t_diff["data_a"]["measures"]) | set(t_diff["data_b"]["measures"])))
             if all_meas:
-                ml = node_l.add("🧪 [bold green]Measures[/bold green]")
-                mr = node_r.add("🧪 [bold green]Measures[/bold green]")
+                ml = node_l.add("🧪 [bold blue]Measures[/bold blue]")
+                mr = node_r.add("🧪 [bold blue]Measures[/bold blue]")
                 for m in all_meas:
                     if m in t_diff["measures"]["removed"]:
                         ml.add(f"[bold bright_red][-] {m}[/bold bright_red]")
