@@ -18,7 +18,7 @@ from pbi_detector import get_open_pbi_models
 from pbip_parser import compare_models
 from semantic_formatter import render_semantic_diff
 
-__version__ = "1.1.3"
+__version__ = "1.1.4"
 
 app = typer.Typer(
     help="TMDL Diff CLI - compare Power BI TMDL export files and open Power BI instances",
@@ -339,7 +339,12 @@ def render_hierarchical_comparison(diff: Dict[str, Any]) -> None:
             _add_table_to_tree(node_r, t_diff["data_b"], "italic dim grey50")
 
     console.print(Panel("📊 [bold]Side-by-Side Model Comparison[/bold]", expand=True, border_style="bright_magenta"))
-    console.print(Columns([tree_left, tree_right], padding=(0, 8), equal=True))
+    
+    table = Table.grid(expand=True)
+    table.add_column(ratio=1)
+    table.add_column(ratio=1)
+    table.add_row(tree_left, tree_right)
+    console.print(table)
 
 
 def _add_table_to_tree(parent_node: Any, table_data: Dict[str, Any], style: str) -> None:
