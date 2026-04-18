@@ -64,30 +64,27 @@ def check_for_updates() -> None:
         pass
 
 
-def version_callback(ctx: typer.Context, param: typer.CallbackParam, value: bool) -> None:
+def version_callback(value: bool) -> None:
     """Show version and check for updates."""
     if value:
-        console.print(f"[bold cyan]tmdl-diff-cli[/bold cyan] version [bold green]{__version__}[/bold green]")
+        console.print(f"[bold cyan]tmdl-diff[/bold cyan] version [bold green]{__version__}[/bold green]")
         check_for_updates()
         raise typer.Exit()
 
 
-@app.callback(invoke_without_command=True)
+@app.callback()
 def main_callback(
-    ctx: typer.Context,
     version: Optional[bool] = typer.Option(
         None,
         "--version",
         "-v",
         help="Show version and check for updates",
-        callback=version_callback,
         is_eager=True,
     ),
 ) -> None:
     """Main app callback - check for updates on startup."""
-    if ctx.invoked_subcommand is None:
-        # If no subcommand, just check for updates silently
-        check_for_updates()
+    if version:
+        version_callback(True)
 
 
 def load_tmdl_lines(file_path: Path) -> List[str]:
@@ -136,11 +133,15 @@ def choose_file(prompt: str, candidates: List[Path]) -> Path:
 
         if selected == "Enter a custom path":
             custom_path = questionary.text("Enter the full path to a .tmdl or .pbip file:").ask()
+            # Strip quotes from the input if present
+            custom_path = custom_path.strip('"').strip("'")
             return Path(custom_path).expanduser().resolve()
 
         return Path(selected)
 
     file_path = questionary.text(prompt).ask()
+    # Strip quotes from the input if present
+    file_path = file_path.strip('"').strip("'")
     return Path(file_path).expanduser().resolve()
 
 
