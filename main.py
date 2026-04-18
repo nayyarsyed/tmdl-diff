@@ -18,7 +18,7 @@ from pbi_detector import get_open_pbi_models
 from pbip_parser import compare_models
 from semantic_formatter import render_semantic_diff
 
-__version__ = "1.1.1"
+__version__ = "1.1.2"
 
 app = typer.Typer(
     help="TMDL Diff CLI - compare Power BI TMDL export files and open Power BI instances",
